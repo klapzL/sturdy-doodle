@@ -1,0 +1,7 @@
+alembic==1.13.1
+alembic-autogen-check==1.1.1
+fastapi==0.111.0
+fastapi-pagination==0.12.24
+psycopg2-binary==2.9.9
+pydantic-settings==2.2.1
+sqlalchemy==1.4.52
