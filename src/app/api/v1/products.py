@@ -4,8 +4,8 @@ from fastapi_pagination import Page
 
 from src.config.database import DBSession
 
-from src.products.services import ProductService
-from src.products.schemas import ProductSchema, ProductQuerySchema, ProductCreate
+from src.app.services.products import ProductService
+from src.app.schemas.products import ProductSchema, ProductQuerySchema, ProductCreate
 
 router = APIRouter(prefix='/v1', tags=['products'])
 

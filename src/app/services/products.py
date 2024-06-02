@@ -1,5 +1,5 @@
 from src.common.service import BaseService
-from src.products.models import Product
+from src.app.models.products import Product
 
 
 class ProductService(BaseService):

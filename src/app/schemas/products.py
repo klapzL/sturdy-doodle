@@ -1,6 +1,6 @@
 from pydantic import BaseModel, ConfigDict
 
-from src.products.enums import ProductType
+from src.app.enums.products import ProductType
 
 
 class ProductSchema(BaseModel):
