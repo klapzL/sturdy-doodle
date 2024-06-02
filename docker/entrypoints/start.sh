@@ -13,9 +13,9 @@ echo "${GREEN}2 = up${NC}"
 echo "${CYAN}3 = stop${NC}"
 echo "${RED}4 = down${NC}"
 
-read -n 1 -p 'whad do do? ' dodo && echo
+read -n 1 -p 'whad do do? ' todo && echo
 
-case $dodo in
+case $todo in
     1)
         echo && read -p "${RED}bildit'? (yeah=1)${NC} " -n 1 confirm && echo
         case $confirm in
