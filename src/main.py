@@ -3,7 +3,7 @@ from fastapi_pagination import add_pagination
 
 from debug_toolbar.middleware import DebugToolbarMiddleware
 
-from src.config.router import router
+from src.app.api.router import router
 from src.config.settings import settings
 
 
