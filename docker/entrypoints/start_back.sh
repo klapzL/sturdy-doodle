@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# alembic="alembic --config src/alembic.ini"
-
 run_alembic() {
   local command="$1"
   alembic --config src/alembic.ini $command
