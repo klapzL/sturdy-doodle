@@ -9,7 +9,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from src.config.settings import settings
 
 
-engine = create_engine(settings.SQLALCHEMY_DATABASE_URI, connect_args={"check_same_thread": False})
+engine = create_engine(settings.SQLALCHEMY_DATABASE_URI)
 
 SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 
