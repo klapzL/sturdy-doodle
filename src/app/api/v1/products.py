@@ -7,32 +7,35 @@ from src.config.database import DBSession
 from src.app.services.products import ProductService
 from src.app.schemas.products import ProductSchema, ProductQuerySchema, ProductCreate
 
-router = APIRouter(prefix='/v1', tags=['products'])
+router = APIRouter(prefix='/products', tags=['products'])
 
 
-@router.get('/products', response_model=Page[ProductSchema])
-def get_products(db: DBSession, product: ProductQuerySchema = Depends()):
+@router.get('/', response_model=Page[ProductSchema])
+def get_products(
+    db: DBSession,
+    product: ProductQuerySchema = Depends(),
+):
     products_filters = product.model_dump(exclude_none=True)
     products = ProductService.get(db, **products_filters)
 
-    return products
+    return {'items': products}
 
 
-@router.get('/products/{product_id}')
+@router.get('/{product_id}', response_model=ProductQuerySchema)
 def get_product(db: DBSession, product_id: int):
     product = ProductService.get_obj(db, id=product_id)
 
     return product
 
 
-@router.post('/products')
+@router.post('/')
 def create_product(db: DBSession, product: ProductCreate):
     ProductService.create(db, **product.model_dump())
 
-    return {'details': 'created!'}
+    return {'message': 'created!'}
 
 
-@router.delete('/products/{product_id}')
+@router.delete('/{product_id}')
 def remove_product(db: DBSession, product_id: int):
     ProductService.delete(db, id=product_id)
 

@@ -20,13 +20,18 @@ class BaseService():
         return cls.filter(db, **data).first()
 
     @classmethod
-    def delete(cls, db: DBSession, **data):
-        db.query(cls.model).filter_by(**data).delete()
-        db.commit()
-
-    @classmethod
     def create(cls, db: DBSession, **data):
         obj = cls.model(**data)
 
         db.add(obj)
+        db.commit()
+
+    @classmethod
+    def update(cls, db: DBSession, **data):
+        db.query(cls.model).filter_by(**data).update(data)
+        db.commit()
+
+    @classmethod
+    def delete(cls, db: DBSession, **data):
+        db.query(cls.model).filter_by(**data).delete()
         db.commit()
