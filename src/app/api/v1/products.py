@@ -10,15 +10,15 @@ from src.app.schemas.products import ProductSchema, ProductQuerySchema, ProductC
 router = APIRouter(prefix='/products', tags=['products'])
 
 
-@router.get('/', response_model=Page[ProductSchema])
+@router.get('/', response_model=ProductSchema)
 def get_products(
     db: DBSession,
     product: ProductQuerySchema = Depends(),
 ):
     products_filters = product.model_dump(exclude_none=True)
-    products = ProductService.get(db, **products_filters)
+    products = ProductService.get_list(db, **products_filters)
 
-    return {'items': products}
+    return products
 
 
 @router.get('/{product_id}', response_model=ProductQuerySchema)

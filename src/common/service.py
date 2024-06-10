@@ -1,4 +1,4 @@
-from fastapi_pagination import paginate
+from fastapi_pagination.ext.sqlalchemy import paginate
 
 from src.common.models import BaseModel
 from src.config.database import DBSession
@@ -28,10 +28,10 @@ class BaseService():
 
     @classmethod
     def update(cls, db: DBSession, **data):
-        db.query(cls.model).filter_by(**data).update(data)
+        cls.filter(db, **data).update(data)
         db.commit()
 
     @classmethod
     def delete(cls, db: DBSession, **data):
-        db.query(cls.model).filter_by(**data).delete()
+        cls.filter(db, **data).delete()
         db.commit()
