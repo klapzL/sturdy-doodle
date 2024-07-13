@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from src.app.api.v1.router import router as api_v1_router
+from src.eventic.api.v1.router import router as api_v1_router
 
 
 router = APIRouter(prefix='/api')

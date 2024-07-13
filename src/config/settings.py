@@ -6,7 +6,13 @@ class Settings(BaseSettings):
 
     DEBUG: bool = True
 
-    SQLALCHEMY_DATABASE_URI: str = 'sqlite:///sqlite.db'
+    TOKEN_SECRET_KEY: str = 'secret'
+    TOKEN_ALGORITHM: str = 'HS256'
+    TOKEN_ACCESS_EXPIRE_MINUTES: int = 60 * 24 * 7
+    TOKEN_REFRESH_EXPIRE_MINUTES: int = 60 * 24 * 7
+
+    SQLALCHEMY_DATABASE_URI: str = 'sqlite+aiosqlite:///sqlite.db'
+    ALEMBIC_DATABASE_URI: str = 'sqlite:///sqlite.db'
 
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str
@@ -15,4 +21,4 @@ class Settings(BaseSettings):
     POSTGRES_DB: str
 
 
-settings  = Settings()
+settings = Settings()

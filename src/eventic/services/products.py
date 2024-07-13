@@ -1,5 +1,5 @@
 from src.common.service import BaseService
-from src.app.models.products import Product
+from src.eventic.models.products import Product
 
 
 class ProductService(BaseService):

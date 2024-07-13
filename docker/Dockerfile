@@ -8,4 +8,4 @@ COPY .. ${MAIN_DIR}
 
 RUN apt-get update \
     && pip install uv \
-    && uv pip install --no-cache-dir -r requirements/dev.txt --system
+    && uv pip install --no-cache-dir -r src/requirements/dev.txt --system
