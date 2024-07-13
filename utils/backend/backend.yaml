@@ -10,21 +10,20 @@ services:
     networks:
       - main_network
     env_file:
-      - ../../.env
+      - ../../src/.env
 
   backend:
     container_name: eventic-backend
     build:
       context: ../../
-      dockerfile: docker/Dockerfile
+      dockerfile: utils/Dockerfile
     volumes:
       - ../..:/opt/services/eventic-backend
     env_file:
-      # - ../../src/.env
-      - ../../.env
+      - ../../src/.env
     ports:
       - "8000:8000"
-    command: "bash /opt/services/eventic-backend/docker/entrypoints/start_back.sh"
+    command: "bash /opt/services/eventic-backend/utils/entrypoints/start_back.sh"
     networks:
       - main_network
       - nginx_network
