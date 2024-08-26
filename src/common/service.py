@@ -1,15 +1,14 @@
-from typing import TypeVar, Generic, Type
-from fastapi_pagination.ext.sqlalchemy import paginate
+from typing import Generic, Type, TypeVar
 
 from sqlalchemy import select
-from sqlalchemy.exc import NoResultFound, MultipleResultsFound
+from sqlalchemy.exc import MultipleResultsFound, NoResultFound
 
+from src.common.exceptions import BadRequestException, NotFoundException
+from src.common.models import BaseModel
 from src.config.database.session import DBSession
 
-from src.common.models import BaseModel
-from src.common.exceptions import NotFoundException, BadRequestException
-
 T = TypeVar('T', bound=BaseModel)
+
 
 class BaseService(Generic[T]):
     model: Type[T]
@@ -21,13 +20,13 @@ class BaseService(Generic[T]):
         return result.scalars()
 
     @classmethod
-    async def get_all(cls, db: DBSession, filter_data):
-        objs = await cls._fetch_records(db, filter_data)
+    async def get(cls, db: DBSession, filter_data):
+        objs = await cls._fetch_records(db)
 
         return objs.one()
 
     @classmethod
-    async def get(cls, db: DBSession, **data):
+    async def get_all(cls, db: DBSession, **data):
         objs = await cls._fetch_records(db, **data)
 
         return objs.all()

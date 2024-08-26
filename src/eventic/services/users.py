@@ -1,20 +1,15 @@
-import jwt
-
 from typing import Annotated
 
-from fastapi import HTTPException, Depends, status
+import jwt
+from fastapi import Depends, HTTPException, status
+from sqlalchemy import select
 
-from sqlalchemy import select, or_
-
-from src.config.settings import settings
-from src.config.database import DBSession
-
+from src.common.exceptions import BadRequestException
 from src.common.jwt import oauth2_scheme
 from src.common.service import BaseService
-from src.common.exceptions import BadRequestException
-
+from src.config.database import DBSession
+from src.config.settings import settings
 from src.eventic.models import User
-from src.eventic.schemas.auth import TokenData
 
 
 class UserService(BaseService):
@@ -58,7 +53,9 @@ class UserService(BaseService):
                 raise BadRequestException(detail='Phone number is already taken.')
 
     @classmethod
-    async def get_current_user(cls, db: DBSession, token: Annotated[str, Depends(oauth2_scheme)]):
+    async def get_current_user(
+        cls, db: DBSession, token: Annotated[str, Depends(oauth2_scheme)]
+    ):
         credentials_exception = HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail='Could not validate credentials',
@@ -69,8 +66,7 @@ class UserService(BaseService):
                 token, settings.TOKEN_SECRET_KEY, algorithms=[settings.TOKEN_ALGORITHM]
             )
             username: str = payload.get('sub')
-            token_data = TokenData(username=username)
         except jwt.InvalidTokenError:
             raise credentials_exception
-        user = await UserService.get_obj(db, username=token_data.username)
+        user = await UserService.get_obj(db, username=username)
         return user

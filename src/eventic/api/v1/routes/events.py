@@ -4,41 +4,41 @@ from fastapi import APIRouter
 
 from src.config.database.session import DBSession
 from src.eventic.schemas.events import (
-    EventsCreate,
-    EventsQuerySchema,
-    EventsSchema,
+    EventCreate,
+    EventQuerySchema,
+    EventSchema,
 )
-from src.eventic.services.events import EventsService
+from src.eventic.services.events import EventService
 
 router = APIRouter(prefix='/events', tags=['events'])
 
 
-@router.get('/', response_model=List[EventsSchema])
-async def get_Eventss(db: DBSession):
-    return await EventsService.get(db)
+@router.get('/', response_model=List[EventSchema])
+async def get_events(db: DBSession):
+    return await EventService.get_all(db)
 
 
-@router.get('/{Events_id}', response_model=EventsQuerySchema)
-async def get_Events(db: DBSession, Events_id: int):
-    return await EventsService.get_obj(db, id=Events_id)
+@router.get('/{event_id}', response_model=EventQuerySchema)
+async def get_event(db: DBSession, event_id: int):
+    return await EventService.get_obj(db, id=event_id)
 
 
 @router.post('/')
-async def create_Events(db: DBSession, event: EventsCreate):
-    await EventsService.create(db, **event.model_dump())
+async def create_event(db: DBSession, event: EventCreate):
+    await EventService.create(db, **event.model_dump())
 
     return {'message': 'created!'}
 
 
-@router.put('/{Events_id}')
-async def update_Events(db: DBSession, Events_id: int, event: EventsCreate):
-    await EventsService.update(db, {'id': Events_id}, event.model_dump())
+@router.put('/{event_id}')
+async def update_evente(db: DBSession, event_id: int, event: EventCreate):
+    await EventService.update(db, {'id': event_id}, event.model_dump())
 
     return {'message': 'updated'}
 
 
-@router.delete('/{Events_id}')
-async def remove_Events(db: DBSession, Events_id: int):
-    await EventsService.delete(db, id=Events_id)
+@router.delete('/{event_id}')
+async def remove_event(db: DBSession, event_id: int):
+    await EventService.delete(db, id=event_id)
 
     return {'message': 'deleted'}

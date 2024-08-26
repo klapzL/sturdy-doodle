@@ -5,7 +5,7 @@ from pydantic.config import ConfigDict
 class UserSchema(BaseModel):
     id: int
 
-    name: str
+    full_name: str
     email: str
     phone: str
 

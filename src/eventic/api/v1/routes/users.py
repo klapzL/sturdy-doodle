@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends
 
 from src.config.database.session import DBSession
 from src.eventic.schemas.auth import UserAuth
-from src.eventic.schemas.users import UserCreate
+from src.eventic.schemas.users import UserCreate, UserSchema
 from src.eventic.services.auth import AuthService
 from src.eventic.services.users import UserService
 
@@ -24,8 +24,6 @@ async def create_user(db: DBSession, user_data: UserCreate):
     return {'message': 'created!'}
 
 
-@router.get('/me')
-def get_me(
-    db: DBSession, user: Annotated[UserAuth, Depends(UserService.get_current_user)]
-):
+@router.get('/me', response_model=UserSchema)
+def get_me(user: Annotated[UserAuth, Depends(UserService.get_current_user)]):
     return user

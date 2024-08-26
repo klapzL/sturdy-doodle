@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import column_property
 
 from src.common.models import BaseModel
@@ -11,7 +11,7 @@ class User(BaseModel):
 
     first_name = Column(String)
     last_name = Column(String)
-    full_name = column_property(f'{first_name} {last_name}')
+    full_name = column_property(first_name + ' ' + last_name)
 
     username = Column(String, unique=True)
     email = Column(String, unique=True)
