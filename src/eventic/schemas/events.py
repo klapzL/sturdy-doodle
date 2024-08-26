@@ -3,7 +3,7 @@ from pydantic import BaseModel, ConfigDict
 from src.eventic.enums.events import EventType
 
 
-class EventsuctSchema(BaseModel):
+class EventsSchema(BaseModel):
     id: int
 
     name: str
@@ -13,13 +13,13 @@ class EventsuctSchema(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
-class EventsuctQuerySchema(BaseModel):
+class EventsQuerySchema(BaseModel):
     name: str | None = None
     price: float | None = None
     type: EventType | None = None
 
 
-class EventsuctCreate(BaseModel):
+class EventsCreate(BaseModel):
     name: str
     price: float
     type: EventType

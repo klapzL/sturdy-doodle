@@ -3,12 +3,10 @@ from typing import Annotated
 from fastapi import APIRouter, Depends
 
 from src.config.database.session import DBSession
-
+from src.eventic.schemas.auth import UserAuth
+from src.eventic.schemas.users import UserCreate
 from src.eventic.services.auth import AuthService
 from src.eventic.services.users import UserService
-
-from src.eventic.schemas.users import UserSchema, UserCreate
-from src.eventic.schemas.auth import UserAuth
 
 router = APIRouter(prefix='/users', tags=['users'])
 
@@ -27,5 +25,7 @@ async def create_user(db: DBSession, user_data: UserCreate):
 
 
 @router.get('/me')
-def get_me(db: DBSession, user: Annotated[UserAuth, Depends(UserService.get_current_user)]):
+def get_me(
+    db: DBSession, user: Annotated[UserAuth, Depends(UserService.get_current_user)]
+):
     return user
