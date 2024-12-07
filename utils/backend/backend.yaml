@@ -12,23 +12,41 @@ services:
     env_file:
       - ../../src/.env
 
-  backend:
+  backend: &backend
+    tty: true
     container_name: eventic-backend
     build:
       context: ../../
       dockerfile: utils/Dockerfile
+    restart: on-failure:5
     volumes:
       - ../..:/opt/services/eventic-backend
     env_file:
       - ../../src/.env
     ports:
       - "8000:8000"
-    command: "bash /opt/services/eventic-backend/utils/entrypoints/start_back.sh"
+    command: "bash /opt/services/eventic-backend/utils/entrypoints/services/backend.sh"
     networks:
       - main_network
       - nginx_network
     depends_on:
       - db
+
+  celery_worker:
+    <<: *backend
+    restart: on-failure:5
+    container_name: eventic_celery_worker
+    ports: []
+    env_file:
+      - ../../src/.env
+    command: "bash /opt/services/eventic-backend/utils/entrypoints/services/worker.sh"
+
+  beat:
+    <<: *backend
+    restart: on-failure:5
+    container_name: eventic_celery_beat
+    ports: []
+    command: "bash /opt/services/eventic-backend/utils/entrypoints/services/beat.sh"
 
 volumes:
   postgres_storage: {}

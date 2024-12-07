@@ -1,1 +1,1 @@
-from src.config.database.session import DBSession # noqa
+from src.config.database.session import DBSession  # noqa

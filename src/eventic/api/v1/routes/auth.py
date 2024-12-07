@@ -7,10 +7,10 @@ from src.config.database import DBSession
 from src.eventic.schemas.auth import Token
 from src.eventic.services.auth import AuthService
 
-router = APIRouter(prefix='/auth', tags=['auth'])
+router = APIRouter(prefix="/auth", tags=["Authentication"])
 
 
-@router.post('/token', response_model=Token)
+@router.post("/token", response_model=Token)
 async def login(db: DBSession, user: Annotated[OAuth2PasswordRequestForm, Depends()]):
     user = await AuthService.authenticate_user(db, user.username, user.password)
     access_token = AuthService.create_access_token(user)
@@ -19,7 +19,7 @@ async def login(db: DBSession, user: Annotated[OAuth2PasswordRequestForm, Depend
     return Token(access_token=access_token, refresh_token=refresh_token)
 
 
-@router.post('/token/refresh', response_model=Token)
+@router.post("/token/refresh", response_model=Token)
 async def refresh_token(refresh_token: Annotated[str, Form()]):
     access_token = AuthService.refresh_token(refresh_token)
     return Token(access_token=access_token, refresh_token=refresh_token)

@@ -16,7 +16,7 @@ class UserCreate(BaseModel):
 
     username: str
     email: EmailStr
-    phone: str = None
+    phone: str | None = None
 
     password: str
 

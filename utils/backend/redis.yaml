@@ -1,0 +1,11 @@
+services:
+  redis:
+    image: redis:7.4.0-alpine
+    container_name: eventic-redis
+    restart: on-failure:5
+    ports:
+      - "6379:6379"
+    volumes:
+      - ../../distributions/redis:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro

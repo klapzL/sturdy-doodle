@@ -1,8 +1,7 @@
-from typing import Annotated
 from collections.abc import AsyncGenerator
+from typing import Annotated
 
 from fastapi import Depends
-
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 

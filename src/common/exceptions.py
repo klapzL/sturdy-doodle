@@ -2,8 +2,8 @@ from fastapi import HTTPException, status
 
 
 class BaseException(HTTPException):
-    status_code: int = None
-    detail: str = None
+    status_code: int
+    detail: str
 
     def __init__(self, detail=None, headers=None):
         super().__init__(
@@ -15,9 +15,9 @@ class BaseException(HTTPException):
 
 class NotFoundException(BaseException):
     status_code = status.HTTP_404_NOT_FOUND
-    detail = 'Not found'
+    detail = "Not found"
 
 
 class BadRequestException(BaseException):
     status_code = status.HTTP_400_BAD_REQUEST
-    detail = 'Bad request'
+    detail = "Bad request"
